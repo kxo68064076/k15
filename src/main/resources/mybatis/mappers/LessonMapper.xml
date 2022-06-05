@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.LessonMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.Lesson">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="courseid" jdbcType="INTEGER" property="courseid" />
+    <result column="duration" jdbcType="INTEGER" property="duration" />
+    <result column="video" jdbcType="VARCHAR" property="video" />
+    <result column="isfree" jdbcType="CHAR" property="isfree" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from k15_lesson
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.Lesson">
+    insert into k15_lesson (id, title, sort, 
+      courseid, duration, video, 
+      isfree, status)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{courseid,jdbcType=INTEGER}, #{duration,jdbcType=INTEGER}, #{video,jdbcType=VARCHAR}, 
+      #{isfree,jdbcType=CHAR}, #{status,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.Lesson">
+    update k15_lesson
+    set title = #{title,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      courseid = #{courseid,jdbcType=INTEGER},
+      duration = #{duration,jdbcType=INTEGER},
+      video = #{video,jdbcType=VARCHAR},
+      isfree = #{isfree,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, sort, courseid, duration, video, isfree, status
+    from k15_lesson
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, sort, courseid, duration, video, isfree, status
+    from k15_lesson
+  </select>
+</mapper>

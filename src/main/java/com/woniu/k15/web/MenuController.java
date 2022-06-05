@@ -1,5 +1,6 @@
 package com.woniu.k15.web;
 
+import com.woniu.k15.entity.Permission;
 import com.woniu.k15.result.ResultResponse;
 import com.woniu.k15.servers.PermissionService;
 import com.woniu.k15.vo.MenuVo;
@@ -25,6 +26,19 @@ public class MenuController {
         ResultResponse<List<MenuVo>> result = null;
         try{
             List<MenuVo> menuVos = permissionService.queryAllMenus();
+            result = new ResultResponse<>(200,"ok",menuVos);
+        }catch (RuntimeException e){
+            result = new ResultResponse<>(404,"查询失败");
+        }
+        return result;
+    }
+
+    @GetMapping("/showParentMenus")
+    @ApiOperation("查询第一级菜单")
+    public ResultResponse<List<Permission>> showParentMenus(){
+        ResultResponse<List<Permission>> result = null;
+        try{
+            List<Permission> menuVos = permissionService.queryAllParentMenus();
             result = new ResultResponse<>(200,"ok",menuVos);
         }catch (RuntimeException e){
             result = new ResultResponse<>(404,"查询失败");

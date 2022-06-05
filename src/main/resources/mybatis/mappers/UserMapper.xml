@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="telphone" jdbcType="CHAR" property="telphone" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="regTime" jdbcType="TIMESTAMP" property="regtime" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from k15_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.User">
+    insert into k15_user (id, account, password, 
+      email, telphone, avatar, 
+      regTime, status)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, 
+      #{email,jdbcType=VARCHAR}, #{telphone,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{regtime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.User">
+    update k15_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      email = #{email,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=CHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      regTime = #{regtime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, account, password, email, telphone, avatar, regTime, status
+    from k15_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, password, email, telphone, avatar, regTime, status
+    from k15_user
+  </select>
+</mapper>

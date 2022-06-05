@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.Course">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="lessonnum" jdbcType="INTEGER" property="lessonnum" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="viewnum" jdbcType="INTEGER" property="viewnum" />
+    <result column="buynum" jdbcType="INTEGER" property="buynum" />
+    <result column="gradeid" jdbcType="INTEGER" property="gradeid" />
+    <result column="subjectid" jdbcType="INTEGER" property="subjectid" />
+    <result column="teacherid" jdbcType="INTEGER" property="teacherid" />
+    <result column="pubtime" jdbcType="TIMESTAMP" property="pubtime" />
+    <result column="expiry" jdbcType="INTEGER" property="expiry" />
+    <result column="isfine" jdbcType="CHAR" property="isfine" />
+    <result column="isfree" jdbcType="CHAR" property="isfree" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from k15_course
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.Course">
+    insert into k15_course (id, name, cover, 
+      lessonnum, price, viewnum, 
+      buynum, gradeid, subjectid, 
+      teacherid, pubtime, expiry, 
+      isfine, isfree, status, description
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
+      #{lessonnum,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{viewnum,jdbcType=INTEGER}, 
+      #{buynum,jdbcType=INTEGER}, #{gradeid,jdbcType=INTEGER}, #{subjectid,jdbcType=INTEGER}, 
+      #{teacherid,jdbcType=INTEGER}, #{pubtime,jdbcType=TIMESTAMP}, #{expiry,jdbcType=INTEGER}, 
+      #{isfine,jdbcType=CHAR}, #{isfree,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{description,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.Course">
+    update k15_course
+    set name = #{name,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      lessonnum = #{lessonnum,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      viewnum = #{viewnum,jdbcType=INTEGER},
+      buynum = #{buynum,jdbcType=INTEGER},
+      gradeid = #{gradeid,jdbcType=INTEGER},
+      subjectid = #{subjectid,jdbcType=INTEGER},
+      teacherid = #{teacherid,jdbcType=INTEGER},
+      pubtime = #{pubtime,jdbcType=TIMESTAMP},
+      expiry = #{expiry,jdbcType=INTEGER},
+      isfine = #{isfine,jdbcType=CHAR},
+      isfree = #{isfree,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, cover, lessonnum, price, viewnum, buynum, gradeid, subjectid, teacherid, 
+    pubtime, expiry, isfine, isfree, status, description
+    from k15_course
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, cover, lessonnum, price, viewnum, buynum, gradeid, subjectid, teacherid, 
+    pubtime, expiry, isfine, isfree, status, description
+    from k15_course
+  </select>
+</mapper>

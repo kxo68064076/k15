@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.Teacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="education" jdbcType="VARCHAR" property="education" />
+    <result column="career" jdbcType="VARCHAR" property="career" />
+    <result column="isFamous" jdbcType="CHAR" property="isfamous" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="subjectId" jdbcType="INTEGER" property="subjectid" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from k15_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.Teacher">
+    insert into k15_teacher (id, name, education, 
+      career, isFamous, avatar, 
+      subjectId, status)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{career,jdbcType=VARCHAR}, #{isfamous,jdbcType=CHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{subjectid,jdbcType=INTEGER}, #{status,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.Teacher">
+    update k15_teacher
+    set name = #{name,jdbcType=VARCHAR},
+      education = #{education,jdbcType=VARCHAR},
+      career = #{career,jdbcType=VARCHAR},
+      isFamous = #{isfamous,jdbcType=CHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      subjectId = #{subjectid,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, name, education, career, isFamous, avatar, subjectId, status
+    from k15_teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, name, education, career, isFamous, avatar, subjectId, status
+    from k15_teacher
+  </select>
+</mapper>

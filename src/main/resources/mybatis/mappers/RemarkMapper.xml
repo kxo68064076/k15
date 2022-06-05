@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.RemarkMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.Remark">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="courseid" jdbcType="INTEGER" property="courseid" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="remarktime" jdbcType="TIMESTAMP" property="remarktime" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from k15_remark
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.Remark">
+    insert into k15_remark (id, userid, courseid, 
+      score, content, remarktime, 
+      status)
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{courseid,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{remarktime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.Remark">
+    update k15_remark
+    set userid = #{userid,jdbcType=INTEGER},
+      courseid = #{courseid,jdbcType=INTEGER},
+      score = #{score,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      remarktime = #{remarktime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, userid, courseid, score, content, remarktime, status
+    from k15_remark
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, userid, courseid, score, content, remarktime, status
+    from k15_remark
+  </select>
+</mapper>

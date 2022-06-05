@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.woniu.k15.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.woniu.k15.entity.Permission">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="url_type" jdbcType="VARCHAR" property="urlType" />
+    <result column="insert_time" jdbcType="TIMESTAMP" property="insertTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_url_permission
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.woniu.k15.entity.Permission">
+    insert into t_url_permission (id, code, name, 
+      url, parent_id, url_type, 
+      insert_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, #{urlType,jdbcType=VARCHAR}, 
+      #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.woniu.k15.entity.Permission">
+    update t_url_permission
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      url_type = #{urlType,jdbcType=VARCHAR},
+      insert_time = #{insertTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, code, name, url, parent_id, url_type, insert_time, update_time
+    from t_url_permission
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, code, name, url, parent_id, url_type, insert_time, update_time
+    from t_url_permission where name like concat("%",#{name},"%")
+  </select>
+
+  <resultMap id="menuMap" type="MenuVo">
+    <id column="pid1" property="id"></id>
+    <result column="pname1" property="name"></result>
+
+    <collection property="children" ofType="MenuVo">
+      <id column="pid2" property="id"></id>
+      <result column="pname2" property="name"></result>
+      <result column="purl" property="url"></result>
+    </collection>
+  </resultMap>
+
+  <select id="selectAllMenus" resultMap="menuMap">
+    SELECT p1.id as pid1 ,p1.name as pname1 ,
+           p2.id as pid2 ,p2.name as pname2 ,p2.url as purl
+    FROM t_url_permission p1 ,t_url_permission p2
+    WHERE p1.id = p2.parent_id
+  </select>
+
+
+
+  <select id="selectAllParentMenus" resultMap="BaseResultMap">
+    SELECT * FROM t_url_permission WHERE parent_id = -1
+  </select>
+</mapper>
