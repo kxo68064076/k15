@@ -17,12 +17,12 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.woniu.k15.entity.Manager">
-    insert into t_manager (id, user_code, user_name, 
-      user_password, email, cellphone, 
+    insert into t_manager (id, user_code, user_name,
+      user_password, email, cellphone,
       locked, insert_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
-      #{userPassword,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{cellphone,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userPassword,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{cellphone,jdbcType=VARCHAR},
       #{locked,jdbcType=VARCHAR}, #{insertTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -38,15 +38,49 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <update id="updateByKey" parameterType="com.woniu.k15.vo.ManagerVo">
+    update t_manager
+    set user_code = #{userCode,jdbcType=VARCHAR},
+        user_name = #{userName,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        cellphone = #{cellphone,jdbcType=VARCHAR},
+        locked = #{locked,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select id, user_code, user_name, user_password, email, cellphone, locked, insert_time, 
+    select id, user_code, user_name, user_password, email, cellphone, locked, insert_time,
     update_time
     from t_manager
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select id, user_code, user_name, user_password, email, cellphone, locked, insert_time, 
+    select id, user_code, user_name, user_password, email, cellphone, locked, insert_time,
     update_time
     from t_manager
   </select>
+
+  <resultMap id="ManagerVoMap" type="com.woniu.k15.vo.ManagerVo">
+    <id column="id" property="id"/>
+    <result column="user_name" property="userName"/>
+    <result column="user_code" property="userCode"/>
+    <result column="locked" property="locked"/>
+    <result column="email" property="email"/>
+    <result column="cellphone" property="cellphone"/>
+    <collection property="roleList" ofType="RoleVo" select="com.woniu.k15.mapper.RoleMapper.selectRolesBymid" column="id"/>
+  </resultMap>
+
+
+  <select id="selectMangerWithRoleByName" resultMap="ManagerVoMap">
+    SELECT * FROM t_manager where user_name like concat("%",#{name},"%")
+  </select>
+
+  <insert id="insertManagerAndRole">
+    insert  into t_manager_role(manager_id,role_id) values
+    <foreach collection="ids" item="id" separator=",">
+      (#{mid},#{id})
+    </foreach>
+  </insert>
+
 </mapper>

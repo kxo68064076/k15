@@ -44,6 +44,11 @@
     from t_url_permission where name like concat("%",#{name},"%")
   </select>
 
+  <select id="select" resultMap="BaseResultMap">
+    select id, code, name, url, parent_id, url_type, insert_time, update_time
+    from t_url_permission
+  </select>
+
   <resultMap id="menuMap" type="MenuVo">
     <id column="pid1" property="id"></id>
     <result column="pname1" property="name"></result>
@@ -60,6 +65,17 @@
            p2.id as pid2 ,p2.name as pname2 ,p2.url as purl
     FROM t_url_permission p1 ,t_url_permission p2
     WHERE p1.id = p2.parent_id
+  </select>
+
+  <select id="selectAllMenuByName" resultMap="menuMap">
+    SELECT DISTINCT p.*
+    FROM t_manager m ,t_manager_role mr ,t_role r,t_role_url_permission rup,
+         (SELECT p1.id as pid1 ,p1.name as pname1 ,
+                 p2.id as pid2 ,p2.name as pname2 ,p2.url as purl
+          FROM t_url_permission p1 ,t_url_permission p2
+          WHERE p1.id = p2.parent_id) p
+    WHERE m.id = mr.manager_id AND mr.role_id = r.id AND r.id = rup.role_id AND p.pid1 = rup.url_permission_id
+      AND m.user_name = #{name}
   </select>
 
 

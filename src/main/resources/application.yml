@@ -1,3 +1,6 @@
+k15:
+  teacher: D:\JavaProjects\nginx-1.21.6\html
+  course: D:\JavaProjects\nginx-1.21.6\html
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

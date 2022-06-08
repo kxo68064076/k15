@@ -13,7 +13,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class K15Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(K15Application.class, args);
+        try {
+            SpringApplication.run(K15Application.class, args);
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
     }
 
 }

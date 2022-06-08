@@ -43,4 +43,16 @@
     select id, name, education, career, isFamous, avatar, subjectId, status
     from k15_teacher
   </select>
+
+  <resultMap id="TeacherVoMap" type="teacherVo" autoMapping="true">
+    <id column="id" property="id"/>
+    <association property="subject" javaType="subject">
+      <id column="sid" property="id"/>
+      <result column="sname" property="name"/>
+    </association>
+  </resultMap>
+
+  <select id="selectAllByName" parameterType="string" resultMap="TeacherVoMap">
+    SELECT *,s.`name` sname FROM k15_teacher t,k15_subject s WHERE t.subjectId = s.id AND t.`name` LIKE CONCAT("%",#{name},"%")
+  </select>
 </mapper>

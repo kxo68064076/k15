@@ -35,4 +35,25 @@
     select id, code, name, insert_time, update_time
     from t_role
   </select>
+
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="String">
+    select id, code, name, insert_time, update_time
+    from t_role where name like concat("%",#{name},"%")
+  </select>
+
+  <select id="selectRoleVoByKey" parameterType="long" resultType="long">
+    SELECT url_permission_id FROM t_role_url_permission WHERE role_id = #{id}
+  </select>
+
+  <select id="addBatchRoleAndPer">
+    insert into t_role_url_permission (role_id,url_permission_id) values
+    <foreach collection="checkedIds" separator="," item="pid">
+      (#{id},#{pid})
+    </foreach>
+  </select>
+
+  <select id="selectRolesBymid" resultType="RoleVo">
+    SELECT r.id,r.name FROM t_role r ,t_manager_role mr WHERE r.id = mr.role_id AND mr.manager_id = #{id};
+  </select>
+
 </mapper>

@@ -33,6 +33,19 @@ public class MenuController {
         return result;
     }
 
+    @GetMapping("/showMenuByName")
+    @ApiOperation("查询所有菜单")
+    public ResultResponse<List<MenuVo>> showMenuByName(String name){
+        ResultResponse<List<MenuVo>> result = null;
+        try{
+            List<MenuVo> menuVos = permissionService.queryAllMenuByName(name);
+            result = new ResultResponse<>(200,"ok",menuVos);
+        }catch (RuntimeException e){
+            result = new ResultResponse<>(404,"查询失败");
+        }
+        return result;
+    }
+
     @GetMapping("/showParentMenus")
     @ApiOperation("查询第一级菜单")
     public ResultResponse<List<Permission>> showParentMenus(){

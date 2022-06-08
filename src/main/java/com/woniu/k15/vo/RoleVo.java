@@ -5,9 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MenuVo {
-    private int id;
+public class RoleVo {
+    private Long id;
     private String name;
-    private String url;
-    private List<MenuVo> children;
+    private List<Long> checkedIds;
 }
